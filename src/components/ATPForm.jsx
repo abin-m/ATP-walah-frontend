@@ -1,8 +1,9 @@
 import React from 'react';
+import Button from './Button';
 
-const ATPForm = () => {
+const ATPForm = ({ button1, button2 }) => {
     return (
-        <div className="space-y-6 ">
+        <div className="space-y-3 ">
             <div className="flex flex-row flex-wrap gap-9 ">
                 <input type="text" placeholder="TestCase Id" className="input input-bordered input-md input-primary w-full max-w-xs" />
                 <input type="text" placeholder="Feature" className="input input-bordered input-md input-primary w-full max-w-screen-md" />
@@ -20,8 +21,9 @@ const ATPForm = () => {
                     <input type="text" placeholder="Comments" className="input input-bordered input-md input-primary w-full max-w-xs" />
                 </div>
                 <div className='justify-end pe-15 space-y-2'>
-                    <button className="btn bg-green-700  w-32 text-white ">Save </button>
-                    <button className="btn  bg-orange-300 w-32">Cancel</button>
+                    <Button>{button1}</Button>
+                    <Button>{button2}</Button>
+
 
                 </div>
             </div>
@@ -31,4 +33,3 @@ const ATPForm = () => {
 };
 
 export default ATPForm;
-
