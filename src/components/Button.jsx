@@ -1,11 +1,19 @@
-import React from 'react'
+// import React from 'react';
 
-const Button = ({ children, onclickHandler }) => {
+// const Button = ({ onclickHandler, children }) => {
+//     return (
+//         <button onClick={onclickHandler} className="btn  bg-slate-900  hover:bg-slate-800 w-32 text-white ">{children}</button>
+//     );
+// };
+
+// export default Button;
+
+const Button = ({ onClick, children }) => {
     return (
-        <div>
-            <button className="btn  bg-slate-900  hover:bg-slate-800 w-32 text-white " onClick={onclickHandler}>{children}</button>
-        </div>
-    )
-}
+        <button onClick={onClick} className="btn  bg-slate-900  hover:bg-slate-800 w-32 text-white ">
+            {children}
+        </button>
+    );
+};
 
-export default Button
+export default Button;

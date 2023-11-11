@@ -1,3 +1,4 @@
+// Table.jsx
 import React, { useState, useEffect } from 'react';
 import { BiDotsHorizontal, BiEdit, BiTrash } from 'react-icons/bi';
 import Modal from './Modal';
@@ -9,6 +10,7 @@ const Table = () => {
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [modalData, setModalData] = useState(null);
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
@@ -24,18 +26,20 @@ const Table = () => {
         };
     }, []);
 
-    const handleButtonClick = (index) => {
+    const handleButtonClick = (index, rowData) => {
         setShowTooltip(!showTooltip);
         setSelectedRowIndex(index);
+        setModalData(rowData);
     };
 
     const handleEditClick = () => {
         setShowEditModal(true);
-        setShowTooltip(false); // Close tooltip when opening the modal
+        setShowTooltip(false);
     };
+
     const handleDeleteClick = () => {
         setShowDeleteModal(true);
-        setShowTooltip(false); // Close tooltip when opening the modal
+        setShowTooltip(false);
     };
 
     const handleCloseModal = () => {
@@ -43,18 +47,32 @@ const Table = () => {
         setShowDeleteModal(false);
     };
 
+    const dummyData = [
+        {
+            tcNo: '1',
+            component: 'CM',
+            feature: 'Description for TC1',
+            testCasePrerequisites: 'CM should be up and running',
+            testCaseDescription: 'Pre-requisites for TC1',
+            steps: 'Steps for TC1',
+            expectedResults: 'Results for TC1',
+            status: 'Passed',
+            comments: 'NA',
+        },
+        // Add more data as needed
+    ];
+
     return (
         <div className='flex overflow-x-auto w-full border border-base-300 rounded-lg'>
             <div className="table w-full overflow-hidden relative">
                 <table className="table table-zebra">
-                    {/* head */}
-                    <thead className=' bg-slate-50'>
+                    <thead className='bg-slate-50'>
                         <tr className='text-left'>
                             <th>TC.No</th>
                             <th>Component</th>
                             <th>Feature</th>
+                            <th>Pre-Requisites</th>
                             <th>Test Case Description</th>
-                            <th>Test Case Pre-requisites</th>
                             <th>Steps</th>
                             <th>Expected Results</th>
                             <th>Status</th>
@@ -63,20 +81,20 @@ const Table = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {[...Array(5)].map((_, index) => (
+                        {dummyData.map((rowData, index) => (
                             <tr key={index}>
-                                <th>1</th>
-                                <td>CM</td>
-                                <td>Description for TC1</td>
-                                <td>Pre-requisites for TC1</td>
-                                <td>Steps for TC1</td>
-                                <td>Results for TC1</td>
-                                <td>Passed</td>
-                                <td>NA</td>
-                                <td>NA</td>
+                                <th>{rowData.tcNo}</th>
+                                <td>{rowData.component}</td>
+                                <td>{rowData.feature}</td>
+                                <td>{rowData.testCasePrerequisites}</td>
+                                <td>{rowData.testCaseDescription}</td>
+                                <td>{rowData.steps}</td>
+                                <td>{rowData.expectedResults}</td>
+                                <td>{rowData.status}</td>
+                                <td>{rowData.comments}</td>
                                 <td>
                                     <div className="relative inline-block tooltip-container">
-                                        <button className="focus:outline-none" onClick={() => handleButtonClick(index)}>
+                                        <button className="focus:outline-none" onClick={() => handleButtonClick(index, rowData)}>
                                             <BiDotsHorizontal />
                                         </button>
                                         {showTooltip && selectedRowIndex === index && !showEditModal && (
@@ -97,16 +115,15 @@ const Table = () => {
                         ))}
                     </tbody>
                 </table>
-                {/* Add 5 empty rows for extra space */}
                 {[...Array(5)].map((_, index) => (
                     <div key={index} style={{ height: '16px' }}></div>
                 ))}
             </div>
             {showEditModal && (
-                <Modal onClose={handleCloseModal} data={"Hi"} />
+                <Modal onClose={handleCloseModal} data={modalData} />
             )}
             {showDeleteModal && (
-                <DeleteAlert onClose={handleCloseModal} data={"Hi"} />
+                <DeleteAlert onClose={handleCloseModal} data={modalData} />
             )}
         </div>
     );
